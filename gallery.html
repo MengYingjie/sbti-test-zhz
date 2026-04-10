@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>后宫图鉴 - ZHBT 人格测试</title>
+  <style>
+    :root {
+      --bg: #f8f1e9;
+      --panel: #ffffff;
+      --text: #3c2a21;
+      --muted: #8c7365;
+      --line: #e5d8cd;
+      --accent: #b63b36;
+      --accent-strong: #8b2320;
+      --shadow: 0 16px 40px rgba(139, 35, 32, 0.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "STZhongsong", "华文中宋", "SimSun", "宋体", sans-serif;
+      background: radial-gradient(circle at top left, #fbf7f2 0, #f8f1e9 36%, #f3eadf 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      color: var(--accent-strong);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .gallery-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff, #fffdfb);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(139, 35, 32, 0.03);
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-img-box {
+      width: 100%;
+      height: 240px;
+      background: #fdfaf7;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .gallery-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-content {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+    }
+
+    .gallery-code {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-family: monospace;
+      background: #f8f1e9;
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .gallery-intro {
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .gallery-desc {
+      font-size: 14px;
+      color: #3e2e26;
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .header .back-btn {
+        position: static;
+        transform: none;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+    <div class="header">
+      <a href="index.html" class="back-btn">← 返回养心殿</a>
+      <h1>ZHBT 后宫图鉴</h1>
+      <p>这深宫之中，27 种生存画像，您是哪一种？</p>
+    </div>
+
+    <div id="galleryGrid" class="gallery-grid"></div>
+  </div>
+
+  <script>
+    const TYPE_LIBRARY = {
+      "CTRL": {
+        "code": "CTRL",
+        "cn": "熹贵妃（甄嬛）",
+        "intro": "这后宫，终究还是本宫的天下！",
+        "desc": "恭喜您，您测出了全宫斗最顶级的拿捏者人格，您就是走到大结局的熹贵妃！所谓“规则”，在您这里只是上位的垫脚石；所谓“宠爱”，不过是您随手可用的筹码。CTRL人格，是后宫行走的人形自走外挂，从纯真少女到黑化大佬，您每一步都踩在别人的大动脉上。普通人被算计只能哭天抢地，而您能在冷宫里复盘，在甘露寺里布局，用一个大招把仇人连锅端。拥有您这样的盟友，意味着在后宫拥有了免死金牌；成为您的敌人？那就只能准备好被一丈红或者鹤顶红带走了。"
+      },
+      "ATM-er": {
+        "code": "ATM-er",
+        "cn": "温太医（温实初）",
+        "intro": "微臣愿为娘娘肝脑涂地。",
+        "desc": "恭喜您，您测出了后宫最强辅助人格。是的，您就是那个随叫随到、把脉看病、替人背锅还要被迫自宫的温太医。您像一部老旧但坚固的提款机，插进去的是别人的焦虑和麻烦，吐出来的是“微臣在”的安心保证。您的人生就是一场盛大的、无人喝彩的单人付账秀。为了心里的白月光，您可以支付时间、支付医术、支付自己的一生。偶尔夜深人静，您也会对着空荡荡的太医院发出一声叹息：我这该死的、无处安放的深情和责任心啊。"
+      },
+      "Dior-s": {
+        "code": "Dior-s",
+        "cn": "隐心者（浣碧）",
+        "intro": "同样是父亲的女儿，凭什么我只能做丫鬟？",
+        "desc": "恭喜！您测出了心比天高、命比纸薄的浣碧人格。您不是不求上进，而是太想上进，奈何手里抓的牌实在太差。看着别人（甄嬛）光芒万丈，您心里总是憋着一口气，觉得“如果我有她的家世和机会，我肯定比她强”。您信奉的法则是：只要有机会，不管是皇上还是果郡王，能抓住的绝不撒手。虽然经常因为眼界不够而弄巧成拙，但您身上那股子不服输、非要争一口气的倔强，也是后宫中不可忽视的生命力。"
+      },
+      "BOSS": {
+        "code": "BOSS",
+        "cn": "皇上（四大爷）",
+        "intro": "朕是天子，雷霆雨露皆是君恩。",
+        "desc": "您手里永远拿着整个大清的玉玺。在后宫这个巨大的棋盘上，所有人都是您的棋子，包括您自己。BOSS人格看后宫，就像在看一场无聊但必须进行的平衡游戏。华妃势大？那就赏她欢宜香；甄嬛聪明？那就当纯元的替身。权力是您的信仰，多疑是您的呼吸。您不是“自带威严气场”，您本身就是人形的冷酷机器，方圆十米内，空气都会自动变得伴君如伴虎。偶尔您也会渴望一点真心，但当真心摆在面前时，您又会本能地怀疑：她是不是在算计朕？"
+      },
+      "THAN-K": {
+        "code": "THAN-K",
+        "cn": "忠仆（崔槿汐）",
+        "intro": "奴婢愿随娘娘同生共死。",
+        "desc": "恭喜您，您是后宫中最不可或缺的神仙队友——槿汐姑姑。您拥有温润如玉的性格和海纳百川的胸怀，且双商极高。滴水之恩，您必涌泉相报。您不争不抢，却能在关键时刻为主子挡刀，甚至为了主子的前程，不惜与苏培盛对食。您眼中的世界虽然充满了算计，但您坚守着自己内心的忠诚底线。拥有一个THAN-K朋友，就像身边多了一个永不枯竭的智慧与温暖发射塔，哪怕在最冷的凌云峰，您也能生起一盆炭火。"
+      },
+      "OH-NO": {
+        "code": "OH-NO",
+        "cn": "谨慎总管（苏培盛）",
+        "intro": "哎哟喂，我的万岁爷诶！",
+        "desc": "在刀尖上跳舞，是您的日常。作为苏培盛，当普通人看到后宫嫔妃吵架，您看到的是一场由“口角-站队-失宠-掉脑袋”构成的灾难史诗。于是，伴随着一声发自灵魂深处的“哎哟喂”，您会以迅雷不及掩耳之势把大事化小，小事化了。您对“边界”有一种近乎偏执的尊重：皇上没发话，您就是一个字也不会多说。所有意外和风险都已经在您的察言观色中，被扼杀在了萌芽状态。您是皇宫里的润滑油，是这疯狂世界里最后那批活得最明白的人。"
+      },
+      "GOGO": {
+        "code": "GOGO",
+        "cn": "军师（曹琴默）",
+        "intro": "娘娘息怒，嫔妾有一计。",
+        "desc": "经研究发现，您的脑子转得比后宫任何人都快。您是华妃背后的最强大脑，是一个极致的“生存机器”。人生信条简单粗暴：只要能活下去，只要能保护我的温宜公主，谁我都能出卖，什么计策我都敢用。别人还在为“姐妹情深”而掉眼泪，您已经把局设好，连后路都铺完了。您不是在“解决问题”，您是在“清除所有可能威胁到自己的障碍”。对您来说，世界上只有两种人：可以利用的工具，和必须除掉的死敌。"
+      },
+      "SEXY": {
+        "code": "SEXY",
+        "cn": "华妃（年世兰）",
+        "intro": "贱人就是矫情！",
+        "desc": "当您走进后宫，所有的花朵都失去了颜色，因为您就是天生的尤物，是紫禁城最明艳的那团火。您爱得热烈，恨得直白，高兴了赏赐金银，不高兴了赏一丈红。您以为皇上爱您的直爽，却不知道那只是一场权力的骗局。但那又如何？您活着的时候，永远是最高傲的年世兰。传说，如果有足够多的SEXY人格聚集在一起，其释放出的综合魅力能量足以让六宫粉黛无颜色。您不需要卖力算计，很多时候，单是您的存在本身就已经让别人恨得牙痒痒了。"
+      },
+      "LOVE-R": {
+        "code": "LOVE-R",
+        "cn": "果郡王（允礼）",
+        "intro": "嬛儿，为了你，我死而无憾。",
+        "desc": "您是这钢铁后宫时代最后的、也是最不合时宜的顶级恋爱脑。您的情感处理器不是权谋制的，而是风花雪月制的。一片落叶，在常人眼里只是“秋天来了”，在您眼中，则是“嬛儿是不是又在伤心了”。为了爱情，您可以吹半宿的冷风给自己降温，只为给她退烧；为了爱情，您可以毫不犹豫地喝下那杯毒酒。您内心世界像一座永不关门的主题公园，一生都在为那个不该爱的人燃烧自己，直到化为灰烬。"
+      },
+      "MUM": {
+        "code": "MUM",
+        "cn": "护女狂魔（敬妃）",
+        "intro": "胧月就是我的命根子！",
+        "desc": "恭喜您，您测出了后宫最温柔的额娘人格。在这充满算计的深宫里，您的底色是温柔与隐忍。您不争宠，不惹事，每天数着宫墙上的砖头度日。直到有了胧月，您才有了软肋，也有了铠甲。妈妈人格擅长感知情绪，知道什么时候该停下来，什么时候该对自己说一句“算了”。您治愈了别人的不开心，却把所有的孤寂留给了自己。只要能守着孩子，哪怕在这深宫里孤独终老，您也甘之如饴。"
+      },
+      "FAKE": {
+        "code": "FAKE",
+        "cn": "皇后（宜修）",
+        "intro": "臣妾做不到啊！",
+        "desc": "在社交场合，您是母仪天下、贤良淑德的存在，因为您切换人格面具比翻书还快。上一秒还是对嫔妃关怀备至的慈爱皇后，下一秒转过身去，立刻化身打胎大队队长，眼神阴冷。您以为您交到了一个真心懂你的姐妹？醒醒。您只是幸运地遇到了一个善于伪装、心机深沉的六宫之主罢了。夜深人静时，您把面具一层层摘下来，回想起纯元，回想起失去的大阿哥，才发现，面具下空得很，全是被嫉妒和不甘填满的黑洞。"
+      },
+      "OJBK": {
+        "code": "OJBK",
+        "cn": "实心炮灰（齐妃）",
+        "intro": "三阿哥又长高了...",
+        "desc": "让我们直面这种后宫生存哲学：OJBK。这已经不是一种人格，而是一种随波逐流的终极无奈。当凡人面临“站队皇后还是华妃”的世纪抉择时，您的大脑无法进行复杂的宫斗计算；于是，您用一种被人卖了还帮人数钱的淡然，轻飘飘地被人忽悠：都行，皇后娘娘说得对。这不是您有主见，而是您完全被别人牵着鼻子走。别人给您夹竹桃，您就去实名投毒；别人暗示您为了儿子死，您就真的去上吊。您在后宫里就像一片浮萍，随风飘摇，全凭一句‘皇上，三阿哥又长高了’苟活，直到最后被彻底牺牲。"
+      },
+      "MALO": {
+        "code": "MALO",
+        "cn": "听命打工魂（剪秋/颂芝）",
+        "intro": "娘娘说得对，娘娘说得是。",
+        "desc": "朋友，您压根就没有自己的灵魂。您的灵魂就是您的主子。当后宫的主子们在绞尽脑汁算计对方时，您在旁边端茶倒水，主子让下毒您就下毒，主子让顶罪您就顶罪。您看透了一切：所谓的“宫斗”，不过是一场主子们的高端局，而您只是局里的NPC。规则偶尔是可以打破的，只要主子发话；良心是可以扔掉的，只要主子开心。您本身就是一个没有自我、只为完成主子指令而存在的宫廷打工人。"
+      },
+      "JOKE-R": {
+        "code": "JOKE-R",
+        "cn": "一丈红（夏冬春）",
+        "intro": "今年的枫叶，好像不够红啊。",
+        "desc": "请注意，您不是一个普通的妃子，您更像一个把笑话穿在身上的小丑。您一出场就嚣张跋扈，怼天怼地对空气，自以为有家世撑腰就能在后宫横着走。结果呢？活不过三集，被华妃赏了一丈红，成了整个后宫的笑料。有您在，场子就不会冷，所有人前仰后合地看您的笑话。您用最大的声音咋呼，却迎来了最光速的下线。后宫的枫叶红了，那是用您的智商染红的。"
+      },
+      "WOC!": {
+        "code": "WOC!",
+        "cn": "惊弓之鸟（富察贵人）",
+        "intro": "有鬼！有鬼啊！不要过来！",
+        "desc": "我们发现了一种神奇的生物——富察贵人。您拥有两种完全独立的操作系统：一个叫“表面系统”，负责发出“我操（啊！）”“皇上救我”等一系列大惊小怪的尖叫；另一个叫“后台系统”，完全没有处理复杂宫斗的能力。别人随便讲个“人彘”的故事，您就能被活活吓疯。您深知自己没啥大本事，却总喜欢在强者面前刷存在感。最终只能在极度的恐慌中，用一声饱含疯癫的尖叫为自己的宫斗生涯画上句号。"
+      },
+      "THIN-K": {
+        "code": "THIN-K",
+        "cn": "躺赢王者（端妃）",
+        "intro": "本宫这身子，是不中用了...",
+        "desc": "经研究发现，您的大脑构造与常人有根本性不同。您常年卧病在床，看似与世无争，实则是后宫的最强大脑。您十分会审判信息，哪怕一年不出门，也能把皇上、皇后、华妃、甄嬛的心思摸得一清二楚。在这个险恶的后宫，您绝不会轻易出手，而是一旦出手（比如木薯粉事件），就能准确地帮甄嬛脱困，并为自己换来温宜公主。当别人看到您在床上发呆？愚蠢，那不是发呆，那是您正在运筹帷幄，决胜于千里之外。"
+      },
+      "SHIT": {
+        "code": "SHIT",
+        "cn": "清醒吐槽役（欣贵人）",
+        "intro": "这后宫的戏，真是让人没眼看。",
+        "desc": "恭喜您，您测出了后宫最强打工人的生存典范——欣贵人（欣太嫔）。您的日常行为模式是一场惊天动地的职场悖论戏剧。嘴上：这安陵容简直是作死，这破宫斗真恶心。手上：老老实实去给熹贵妃请安，递投名状。嘴上：这祺贵人的做派简直像一坨 shit，赶紧毁灭吧。手上：稳稳当当配合甄嬛演戏，把反派锤得死死的。您看透了后宫的虚伪，满腹牢骚，但依然每天按时打卡上班。别怕您那嫌弃的白眼，那是您在这疯狂的世界里，保持清醒并苟到最后拿太嫔退休金的终极智慧。"
+      },
+      "ZZZZ": {
+        "code": "ZZZZ",
+        "cn": "心死者（沈眉庄）",
+        "intro": "宁可枝头抱香死，何曾吹落北风中。",
+        "desc": "恭喜您，您测出了后宫最决绝的装死人格。自从被皇上伤了心（假孕争宠事件），您就彻底对这份感情判了死刑。群里（后宫）再怎么争宠，您可以视而不见，每天准时去太后宫里打卡上班，仿佛一具没有感情的请安机器。直到“温太医”这个唯一的最高权限指令出现，您才真正爆发了。您向宇宙证明了一个真理：不爱皇上之后，在这后宫里活得比谁都明白，比谁都通透。"
+      },
+      "POOR": {
+        "code": "POOR",
+        "cn": "鹂妃（安陵容）",
+        "intro": "这条命，这口气，从来由不得我自己。",
+        "desc": "恭喜您，您测出了【POOR - 贫困者】。这个“贫困”不是说您没有银子，而是您出身低微、底牌极差所带来的终生自卑。别人靠家世、靠容貌，您只能靠自己死磕：练歌、练冰嬉、配香料。您的世界很简单：为了活下去，为了不再被欺负，必须不择手段。您把精力压成一束激光，照哪儿，哪儿就开始冒烟（甚至把自己的嗓子和身体都搭进去了）。您不是资源少，您是把资源全部用来对抗自己内心的阴暗和恐惧，最终却还是走向了毁灭。"
+      },
+      "MONK": {
+        "code": "MONK",
+        "cn": "清修者（莫言/甘露寺甄嬛）",
+        "intro": "施主，这都是你的业障。",
+        "desc": "当别人在后宫里参悟爱与恨的纠缠，您选择在甘露寺参悟佛法。您已然看破红尘，不希望闲人来扰您的清修。您的个人空间，是您的结界，是您的凌云峰，神圣不可侵犯。踏入者，会感受到一种来自灵魂深处的冷漠感。您不黏不缠，因为在您的世界观里，万物皆有其定数。皇上也好，果郡王也罢，终究不过是过眼云烟，只有内心的平静才是永恒的追求。"
+      },
+      "IMSB": {
+        "code": "IMSB",
+        "cn": "美丽炮灰（祺嫔）",
+        "intro": "臣妾要告发熹贵妃私通！",
+        "desc": "恭喜您！您根本不在聪明人的范畴内！您测出了百年一遇的美丽炮灰人格。您的大脑里住着两个战士：一个叫“我太美了！”，另一个叫“我太蠢了！”。当您面对甄嬛时，前者会说：冲啊！滴血验亲！扳倒她！后者接着说：哎呀，怎么把我自己搭进去了？最终结果：在雨中被打死。您不是真的坏，您只是被皇后当枪使了还沾沾自喜。您的内心戏很多，但智商实在不足以支撑您在后宫活过三十集。"
+      },
+      "SOLO": {
+        "code": "SOLO",
+        "cn": "孤高者（四阿哥）",
+        "intro": "儿臣自知出身卑微，不敢奢望。",
+        "desc": "恭喜您，您测出了全后宫最隐忍的【SOLO - 孤儿】人格。别急着哭，国王的加冕仪式，通常都是一个人。您从小爹不疼娘不爱，在圆明园独自长大。您在自己的灵魂外围建起了一座名为“谨小慎微”的长城。每一块砖，都是过去受过的冷眼。您就像一只把所有野心都藏起来的孤狼，直到遇到甄嬛，才露出了獠牙。那满身的谨慎不是懦弱，那是一句句说不出口的“我要夺回属于我的一切”。"
+      },
+      "FUCK": {
+        "code": "FUCK",
+        "cn": "狂野拽妃（叶澜依）",
+        "intro": "这福气给你要不要啊？",
+        "desc": "恭喜您！您根本不受后宫规矩的约束！您测出了百年一遇的狂野人格——宁嫔（叶澜依）。在您的世界观里，世俗规则、君臣之礼简直毫无意义。太后赏的绝育汤？端起来就喝！皇上的恩宠？我根本不稀罕，天天给他甩脸色。您的情绪开关是物理拨片式的：对果郡王是极致的温柔（FUCK YEAH），对四大爷是极致的冷脸（FUCK OFF）。您追求的不仅是当下的快感，也是一种在死气沉沉的后宫里横冲直撞的生命力。当所有人都被驯化成了温顺的家禽，您则是荒野上最后那一声孤狼的嚎叫，甚至最后敢徒手送皇上归西！"
+      },
+      "DEAD": {
+        "code": "DEAD",
+        "cn": "白月光（纯元皇后）",
+        "intro": "菀菀类卿...",
+        "desc": "恭喜您，您测出了全后宫最为无敌的人格——纯元皇后。虽然您已经死了，活在所有人的台词里，但您却统治了整个后宫！您已经看透了那些无意义的宫斗，因为您不需要斗，皇上永远把您放在心底最柔软的地方。您的存在，就是对这个喧嚣后宫最沉默也最彻底的碾压。不管甄嬛怎么努力，不管皇后怎么算计，在皇上心里，谁也比不上您。您是超越了生死的终极赢家。"
+      },
+      "IMFW": {
+        "code": "IMFW",
+        "cn": "坑爹王者（三阿哥）",
+        "intro": "皇阿玛，儿臣知错了！",
+        "desc": "恭喜您，您测出的不是一个普通的皇子，您是一种极其珍稀的——坑爹（坑娘）王者。您的自尊通常有些脆弱，缺乏主见，学习不好，还容易被别人（四阿哥）忽悠。您能精确地感知到周围谁能保护您（齐妃、皇后），然后狠狠地把她们坑死。走进您的生活，就像走进了一个定时炸弹库，不知道什么时候就会因为帮八叔求情而把自己炸飞。您未必是真的废，您只是在残酷的皇权斗争中，实在长了一颗太天真的脑袋。"
+      },
+      "HHHH": {
+        "code": "HHHH",
+        "cn": "纯真吃货（淳常在）",
+        "intro": "莞姐姐，这里的点心真好吃！",
+        "desc": "恭喜您！由于您的思维回路过于清奇，标准后宫心计库已全面崩溃。系统为您强制匹配了这个人格——【淳常在】。这个人格有什么特质？吃！吃！吃！笑！笑！笑！对不起，这就是全部的特质了。在满是算计的后宫里，您就像一股清流，满脑子只有各种酥、各种糕点。虽然最后因为不小心听到了华妃的秘密而下线，但您留给后宫的，永远是那个没心没肺、抱着点心傻乐的纯真模样。"
+      },
+      "DRUNK": {
+        "code": "DRUNK",
+        "cn": "饮鸩者（果郡王隐藏线）",
+        "intro": "这杯酒，我替你喝了。",
+        "desc": "您为什么会毫不犹豫地端起那杯御赐的毒酒？因为您体内流淌的不是求生的欲望，是对嬛儿极致的爱！哦，那杯毒酒，每一滴都在燃烧，都在沸腾。多么伟大的牺牲！它让您在生命的最后一刻，依然能把最爱的人护在身后。您终于明白，昨晚那个在桐花台吹冷风的人，今天喝下毒酒的人，已经完完全全把自己的命交了出去。恭喜您触发了隐藏结局：虽然您死了，但在她心里，您永远活着。"
+      }
+    };
+
+    const TYPE_IMAGES = {
+      "IMSB": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20but%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20looking%20foolish%20but%20pretty%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "BOSS": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20majestic%20and%20suspicious%20ancient%20Chinese%20Emperor%20in%20yellow%20dragon%20robe%2C%20Qing%20Dynasty%2C%20sitting%20on%20throne%2C%20authoritative%2C%20high%20quality&image_size=portrait_4_3",
+      "MUM": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20gentle%20and%20patient%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20motherly%20smile%2C%20holding%20a%20child%27s%20toy%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "FAKE": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20hypocritical%20ancient%20Chinese%20Empress%20in%20Qing%20Dynasty%20golden%20costume%2C%20smiling%20but%20with%20dark%20eyes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "Dior-s": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20jealous%20and%20ambitious%20ancient%20Chinese%20maid%20in%20Qing%20Dynasty%20green%20costume%2C%20looking%20up%20with%20desire%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "DEAD": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20ancient%20Chinese%20Empress%20in%20white%20and%20silver%20costume%20dancing%2C%20ethereal%20and%20ghostly%20like%20moonlight%2C%20Qing%20Dynasty%2C%20high%20quality&image_size=portrait_4_3",
+      "ZZZZ": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20dignified%20and%20indifferent%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20purple%20costume%2C%20looking%20disappointed%20and%20calm%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "GOGO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20smart%20and%20calculating%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20scheming%20eyes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "FUCK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20but%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20looking%20fierce%20and%20pointing%20finger%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "CTRL": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20powerful%20and%20gorgeous%20ancient%20Chinese%20Noble%20Consort%20in%20Qing%20Dynasty%20red%20and%20gold%20costume%2C%20heavy%20makeup%2C%20ruling%20the%20palace%2C%20high%20quality&image_size=portrait_4_3",
+      "HHHH": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20innocent%20and%20happy%20ancient%20Chinese%20young%20concubine%20in%20Qing%20Dynasty%20pink%20costume%2C%20eating%20pastries%20and%20smiling%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "SEXY": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20extremely%20gorgeous%20and%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20bright%20red%20costume%2C%20rolling%20eyes%2C%20luxurious%20palace%2C%20high%20quality&image_size=portrait_4_3",
+      "OJBK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20aging%20and%20foolish%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20pink%20costume%2C%20holding%20a%20bowl%20of%20soup%2C%20looking%20anxious%20and%20manipulated%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "JOKE-R": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20foolish%20and%20loud%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20colorful%20costume%2C%20looking%20ridiculous%20and%20arrogant%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "POOR": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20timid%20and%20inferior%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20plain%20costume%2C%20making%20spices%20with%20a%20dark%20expression%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "OH-NO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20cautious%20and%20smart%20ancient%20Chinese%20head%20eunuch%20in%20Qing%20Dynasty%20eunuch%20costume%2C%20holding%20a%20fly%20whisk%2C%20looking%20careful%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "MONK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20calm%20ancient%20Chinese%20nun%20in%20grey%20robes%2C%20sweeping%20leaves%20in%20a%20temple%20courtyard%2C%20peaceful%20and%20indifferent%2C%20high%20quality&image_size=portrait_4_3",
+      "SHIT": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20calm%20and%20cynical%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20rolling%20eyes%20and%20gossiping%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "THAN-K": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20loyal%20and%20wise%20ancient%20Chinese%20senior%20maid%20in%20Qing%20Dynasty%20costume%2C%20bowing%20respectfully%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "MALO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20obedient%20and%20tired%20ancient%20Chinese%20maid%20in%20Qing%20Dynasty%20costume%2C%20following%20orders%20blindly%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "ATM-er": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20gentle%20and%20loyal%20ancient%20Chinese%20imperial%20doctor%20in%20Qing%20Dynasty%20official%20costume%2C%20holding%20a%20medicine%20box%2C%20looking%20sad%20but%20devoted%2C%20high%20quality&image_size=portrait_4_3",
+      "THIN-K": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20sick%20but%20extremely%20smart%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20lying%20on%20a%20couch%20calculating%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "SOLO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20lonely%20and%20enduring%20ancient%20Chinese%20young%20prince%20in%20Qing%20Dynasty%20costume%2C%20standing%20alone%20in%20the%20palace%20courtyard%2C%20hiding%20his%20ambition%2C%20high%20quality&image_size=portrait_4_3",
+      "LOVE-R": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20romantic%20and%20handsome%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%2C%20playing%20a%20flute%20under%20the%20moonlight%2C%20infatuated%2C%20high%20quality&image_size=portrait_4_3",
+      "WOC!": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20terrified%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20screaming%20and%20looking%20like%20a%20frightened%20bird%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
+      "DRUNK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20tragic%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%20drinking%20poisoned%20wine%20with%20a%20smile%2C%20sacrificing%20for%20love%2C%20high%20quality&image_size=portrait_4_3",
+      "IMFW": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20useless%20and%20stupid%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%2C%20looking%20confused%20and%20making%20mistakes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3"
+    };
+
+    function renderGallery() {
+      const galleryGrid = document.getElementById('galleryGrid');
+      galleryGrid.innerHTML = Object.values(TYPE_LIBRARY).map(type => {
+        const imageSrc = TYPE_IMAGES[type.code];
+        const imgTag = imageSrc 
+          ? `<img src="${imageSrc}" alt="${type.cn}" loading="lazy" />` 
+          : `<div style="padding:40px;color:var(--muted)">暂无画像</div>`;
+        
+        return `
+          <div class="gallery-card">
+            <div class="gallery-img-box">
+              ${imgTag}
+            </div>
+            <div class="gallery-content">
+              <div class="gallery-title">${type.cn}</div>
+              <div class="gallery-code">${type.code}</div>
+              <div class="gallery-intro">“${type.intro}”</div>
+              <div class="gallery-desc" title="${type.desc}">${type.desc}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 初始化渲染
+    renderGallery();
+  </script>
+</body>
+</html>

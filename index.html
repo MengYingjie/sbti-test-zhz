@@ -680,90 +680,6 @@
       .question-title { font-size: 15px; }
       .dim-grid,
       .score-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr; }
-    }
-
-    /* 后宫图鉴样式 */
-    .gallery-wrap {
-      margin-top: 22px;
-      padding: 22px;
-    }
-    .gallery-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .gallery-header h2 {
-      font-size: 28px;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .gallery-card {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: linear-gradient(180deg, #ffffff, #fffdfb);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .gallery-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-    }
-    .gallery-img-box {
-      width: 100%;
-      height: 200px;
-      background: #fdfaf7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid var(--line);
-      overflow: hidden;
-    }
-    .gallery-img-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .gallery-content {
-      padding: 16px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .gallery-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--accent-strong);
-      margin-bottom: 4px;
-    }
-    .gallery-code {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-family: monospace;
-    }
-    .gallery-intro {
-      font-size: 14px;
-      color: var(--text);
-      font-weight: 500;
-      margin-bottom: 8px;
-      font-style: italic;
-    }
-    .gallery-desc {
-      font-size: 13px;
-      color: #3e2e26;
-      line-height: 1.6;
-      flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
   </style>
 </head>
@@ -775,7 +691,7 @@
         <p class="sub" style="margin-top: 16px;">这深宫之中，哪有那么多MBTI，只有成王败寇。<br>小主，测测你在这后宫里能活到第几集？</p>
         <div class="hero-actions hero-actions-single">
           <button id="startBtn" class="btn-primary">进宫领旨</button>
-          <button id="viewGalleryBtn" class="btn-secondary">查看后宫图鉴</button>
+          <button id="viewGalleryBtn" class="btn-secondary" onclick="window.location.href='gallery.html'">查看后宫图鉴</button>
         </div>
         <div style="padding-top: 2rem; display: flex; flex-direction: column;">
           <span>
@@ -856,20 +772,6 @@
             <button id="restartBtn" class="btn-secondary">重新投胎</button>
             <button id="toTopBtn" class="btn-primary">返回养心殿</button>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 后宫图鉴页面 -->
-    <section id="gallery" class="screen">
-      <div class="gallery-wrap card">
-        <div class="gallery-header">
-          <h2>后宫图鉴</h2>
-          <p class="sub">ZHBT 人格测试全 27 种后宫生存画像</p>
-        </div>
-        <div id="galleryGrid" class="gallery-grid"></div>
-        <div class="result-actions" style="margin-top: 32px; justify-content: center;">
-          <button id="galleryToTopBtn" class="btn-secondary">返回养心殿</button>
         </div>
       </div>
     </section>
@@ -1578,8 +1480,7 @@
     const screens = {
       intro: document.getElementById('intro'),
       test: document.getElementById('test'),
-      result: document.getElementById('result'),
-      gallery: document.getElementById('gallery')
+      result: document.getElementById('result')
     };
 
     const questionList = document.getElementById('questionList');
@@ -1833,32 +1734,7 @@
       showScreen('test');
     }
 
-    function renderGallery() {
-      const galleryGrid = document.getElementById('galleryGrid');
-      galleryGrid.innerHTML = Object.values(TYPE_LIBRARY).map(type => {
-        const imageSrc = TYPE_IMAGES[type.code];
-        const imgTag = imageSrc ? `<img src="${imageSrc}" alt="${type.cn}" loading="lazy" />` : `<div style="padding:40px;color:var(--muted)">暂无画像</div>`;
-        
-        return `
-          <div class="gallery-card">
-            <div class="gallery-img-box">
-              ${imgTag}
-            </div>
-            <div class="gallery-content">
-              <div class="gallery-title">${type.cn}</div>
-              <div class="gallery-code">${type.code}</div>
-              <div class="gallery-intro">“${type.intro}”</div>
-              <div class="gallery-desc" title="${type.desc}">${type.desc}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      showScreen('gallery');
-    }
-
     document.getElementById('startBtn').addEventListener('click', () => startTest(false));
-    document.getElementById('viewGalleryBtn').addEventListener('click', renderGallery);
-    document.getElementById('galleryToTopBtn').addEventListener('click', () => showScreen('intro'));
     document.getElementById('backIntroBtn').addEventListener('click', () => showScreen('intro'));
     document.getElementById('submitBtn').addEventListener('click', renderResult);
     document.getElementById('restartBtn').addEventListener('click', () => startTest(false));
