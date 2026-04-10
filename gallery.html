@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>后宫图鉴 - ZHBT 人格测试</title>
   <style>
@@ -329,33 +330,33 @@
     };
 
     const TYPE_IMAGES = {
-      "IMSB": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20but%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20looking%20foolish%20but%20pretty%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "BOSS": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20majestic%20and%20suspicious%20ancient%20Chinese%20Emperor%20in%20yellow%20dragon%20robe%2C%20Qing%20Dynasty%2C%20sitting%20on%20throne%2C%20authoritative%2C%20high%20quality&image_size=portrait_4_3",
-      "MUM": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20gentle%20and%20patient%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20motherly%20smile%2C%20holding%20a%20child%27s%20toy%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "FAKE": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20hypocritical%20ancient%20Chinese%20Empress%20in%20Qing%20Dynasty%20golden%20costume%2C%20smiling%20but%20with%20dark%20eyes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "Dior-s": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20jealous%20and%20ambitious%20ancient%20Chinese%20maid%20in%20Qing%20Dynasty%20green%20costume%2C%20looking%20up%20with%20desire%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "DEAD": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20ancient%20Chinese%20Empress%20in%20white%20and%20silver%20costume%20dancing%2C%20ethereal%20and%20ghostly%20like%20moonlight%2C%20Qing%20Dynasty%2C%20high%20quality&image_size=portrait_4_3",
-      "ZZZZ": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20dignified%20and%20indifferent%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20purple%20costume%2C%20looking%20disappointed%20and%20calm%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "GOGO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20smart%20and%20calculating%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20scheming%20eyes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "FUCK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20beautiful%20but%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20looking%20fierce%20and%20pointing%20finger%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "CTRL": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20powerful%20and%20gorgeous%20ancient%20Chinese%20Noble%20Consort%20in%20Qing%20Dynasty%20red%20and%20gold%20costume%2C%20heavy%20makeup%2C%20ruling%20the%20palace%2C%20high%20quality&image_size=portrait_4_3",
-      "HHHH": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20innocent%20and%20happy%20ancient%20Chinese%20young%20concubine%20in%20Qing%20Dynasty%20pink%20costume%2C%20eating%20pastries%20and%20smiling%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "SEXY": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20extremely%20gorgeous%20and%20arrogant%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20bright%20red%20costume%2C%20rolling%20eyes%2C%20luxurious%20palace%2C%20high%20quality&image_size=portrait_4_3",
-      "OJBK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20aging%20and%20foolish%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20pink%20costume%2C%20holding%20a%20bowl%20of%20soup%2C%20looking%20anxious%20and%20manipulated%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "JOKE-R": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20foolish%20and%20loud%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20colorful%20costume%2C%20looking%20ridiculous%20and%20arrogant%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "POOR": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20timid%20and%20inferior%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20plain%20costume%2C%20making%20spices%20with%20a%20dark%20expression%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "OH-NO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20cautious%20and%20smart%20ancient%20Chinese%20head%20eunuch%20in%20Qing%20Dynasty%20eunuch%20costume%2C%20holding%20a%20fly%20whisk%2C%20looking%20careful%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "MONK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20calm%20ancient%20Chinese%20nun%20in%20grey%20robes%2C%20sweeping%20leaves%20in%20a%20temple%20courtyard%2C%20peaceful%20and%20indifferent%2C%20high%20quality&image_size=portrait_4_3",
-      "SHIT": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20calm%20and%20cynical%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20rolling%20eyes%20and%20gossiping%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "THAN-K": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20loyal%20and%20wise%20ancient%20Chinese%20senior%20maid%20in%20Qing%20Dynasty%20costume%2C%20bowing%20respectfully%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "MALO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=An%20obedient%20and%20tired%20ancient%20Chinese%20maid%20in%20Qing%20Dynasty%20costume%2C%20following%20orders%20blindly%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "ATM-er": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20gentle%20and%20loyal%20ancient%20Chinese%20imperial%20doctor%20in%20Qing%20Dynasty%20official%20costume%2C%20holding%20a%20medicine%20box%2C%20looking%20sad%20but%20devoted%2C%20high%20quality&image_size=portrait_4_3",
-      "THIN-K": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20sick%20but%20extremely%20smart%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20lying%20on%20a%20couch%20calculating%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "SOLO": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20lonely%20and%20enduring%20ancient%20Chinese%20young%20prince%20in%20Qing%20Dynasty%20costume%2C%20standing%20alone%20in%20the%20palace%20courtyard%2C%20hiding%20his%20ambition%2C%20high%20quality&image_size=portrait_4_3",
-      "LOVE-R": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20romantic%20and%20handsome%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%2C%20playing%20a%20flute%20under%20the%20moonlight%2C%20infatuated%2C%20high%20quality&image_size=portrait_4_3",
-      "WOC!": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20terrified%20ancient%20Chinese%20concubine%20in%20Qing%20Dynasty%20costume%2C%20screaming%20and%20looking%20like%20a%20frightened%20bird%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3",
-      "DRUNK": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20tragic%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%20drinking%20poisoned%20wine%20with%20a%20smile%2C%20sacrificing%20for%20love%2C%20high%20quality&image_size=portrait_4_3",
-      "IMFW": "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=A%20useless%20and%20stupid%20ancient%20Chinese%20prince%20in%20Qing%20Dynasty%20costume%2C%20looking%20confused%20and%20making%20mistakes%2C%20palace%20background%2C%20high%20quality&image_size=portrait_4_3"
+      "CTRL": "https://pic1.zhimg.com/v2-24cf1561fde5c028fc02acadb7432f2e_r.jpg",
+      "ATM-er": "https://so1.360tres.com/t013a5919f602f6eba7.jpg",
+      "Dior-s": "http://5b0988e595225.cdn.sohucs.com/images/20180814/c3d5d9f6e27a4b4888452537e205c7a4.jpeg",
+      "BOSS": "https://p1.ssl.qhimg.com/t011810a0fe9fc1a3ce.jpg",
+      "THAN-K": "http://n.sinaimg.cn/sinakd10111/122/w640h282/20200518/d4e4-itriatt2491764.jpg",
+      "OH-NO": "https://p2.ssl.img.360kuai.com/t01de902db1975c59a0.jpg",
+      "GOGO": "https://so1.360tres.com/t01a12de92fe9c68e8c.jpg",
+      "SEXY": "http://img.tvzn.com/photo/205354.jpg",
+      "LOVE-R": "http://photocdn.sohu.com/20130425/Img373945281.jpg",
+      "MUM": "https://pic2.zhimg.com/v2-25fc9992ff9c22522be3e529754a6c41_b.jpg",
+      "FAKE": "https://img.alqsh.com/upload/2024/1001/20241001165121_0_981be180.jpg",
+      "OJBK": "https://pica.zhimg.com/80/v2-683154685dfad2864f622caac6452d4a_r.jpg",
+      "MALO": "https://i.ytimg.com/vi/jXNH-foU5gU/maxresdefault.jpg",
+      "JOKE-R": "http://p7.itc.cn/images01/20200829/99b0aeed6f484d6aa64ea79c712bf767.jpeg",
+      "WOC!": "http://e3f49eaa46b57.cdn.sohucs.com/c_pad,w_600,h_400,blur_80/sscs/2023/3/26/20/5/6_1872f20b09ag20SysCutcloudSrcimag_432839695_7_1b.jpg",
+      "THIN-K": "http://img.tvzn.com/photo/205155.jpg",
+      "SHIT": "https://i.ytimg.com/vi/BcI-JnaV3qI/maxresdefault.jpg",
+      "ZZZZ": "http://p9.qhimg.com/t11508c75c8430e2bcad7e3b716.jpg",
+      "POOR": "http://p9.qhimg.com/t11508c75c8c76fedb81729f68b.jpg",
+      "MONK": "http://img.mp.itc.cn/upload/20160506/f2420bc1640c409bb63fe455cd4519dc_th.jpg",
+      "IMSB": "http://p4.itc.cn/images01/20200827/7271fafea23044c5b88773b0d797b21e.jpeg",
+      "SOLO": "https://i.ytimg.com/vi/vcmmYg0bmUI/maxresdefault.jpg",
+      "FUCK": "http://5b0988e595225.cdn.sohucs.com/images/20190210/32161bad6c8b41dd8688abcf1aa29269.jpeg",
+      "DEAD": "https://x0.ifengimg.com/ucms/2024_51/57AA25D384D2F4832CC3660164A48CCDF6301B8A_size225_w2160_h3840.jpg",
+      "IMFW": "https://i.ytimg.com/vi/8aZb6u72PAQ/maxresdefault.jpg",
+      "HHHH": "http://i1.hdslb.com/bfs/archive/68ec8048b71fd461732848d3544a71fb878fdf09.jpg",
+      "DRUNK": "https://i.ytimg.com/vi/0VrG40h0X10/hqdefault.jpg"
     };
 
     function renderGallery() {
