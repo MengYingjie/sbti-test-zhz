@@ -5,22 +5,18 @@ import urllib.parse
 from time import sleep
 
 characters = {
-    "ZHENHUAN": "甄嬛传 甄嬛 剧照 高清",
-    "HUAFEI": "甄嬛传 华妃 剧照 高清",
-    "EMPRESS": "甄嬛传 皇后 宜修 剧照",
-    "MEIZHUANG": "甄嬛传 沈眉庄 剧照",
-    "LINGRONG": "甄嬛传 安陵容 剧照",
-    "JINGFEI": "甄嬛传 敬妃 剧照",
-    "DUANFEI": "甄嬛传 端妃 剧照",
-    "QIFEI": "甄嬛传 齐妃 剧照",
-    "QIGUIREN": "甄嬛传 祺贵人 剧照",
-    "YELANYI": "甄嬛传 叶澜依 剧照",
-    "CAOGUIREN": "甄嬛传 曹贵人 剧照",
-    "EMPEROR": "甄嬛传 皇上 雍正 剧照",
-    "GUOJUNWANG": "甄嬛传 果郡王 剧照",
-    "JINXI": "甄嬛传 崔槿汐 剧照",
-    "SUPEISHENG": "甄嬛传 苏培盛 剧照",
-    "XIADONGCHUN": "甄嬛传 夏冬春 剧照"
+    "WENSHICHU": "甄嬛传 温实初 剧照",
+    "XIAOYUNZI": "甄嬛传 小允子 剧照",
+    "CAOQINMO": "甄嬛传 曹琴默 曹贵人 剧照",
+    "LIUZHU": "甄嬛传 流朱 剧照",
+    "XINGUIREN": "甄嬛传 欣贵人 剧照",
+    "CHUN": "甄嬛传 淳常在 淳儿 剧照",
+    "SONGZHI": "甄嬛传 颂芝 剧照",
+    "HUANBI": "甄嬛传 浣碧 剧照",
+    "CHUNYUAN": "甄嬛传 纯元皇后 剧照",
+    "SANAGE": "甄嬛传 三阿哥 弘时 剧照",
+    "LIPIN": "甄嬛传 丽嫔 剧照",
+    "NIANGENGYAO": "甄嬛传 年羹尧 剧照"
 }
 
 output_dir = "/workspace/image"
