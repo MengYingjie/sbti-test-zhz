@@ -738,7 +738,7 @@
               <div class="type-kicker" id="resultModeKicker">你在后宫中的角色</div>
               <div class="type-name" id="resultTypeName">熹贵妃（拿捏者）</div>
               <div class="match" id="matchBadge">宫斗存活率 92%</div>
-              <div class="type-subname" id="resultTypeSub">系统备注会显示在这里。</div>
+              <div class="type-subname" id="resultTypeSub" style="display:none;">系统备注会显示在这里。</div>
             </div>
           </div>
 
@@ -1694,7 +1694,7 @@
       const type = result.finalType;
 
       document.getElementById('resultModeKicker').textContent = result.modeKicker;
-      document.getElementById('resultTypeName').textContent = `${type.code}（${type.cn}）`;
+      document.getElementById('resultTypeName').textContent = type.cn;
       document.getElementById('matchBadge').textContent = result.badge;
       document.getElementById('resultTypeSub').textContent = result.sub;
       document.getElementById('resultDesc').textContent = type.desc;
