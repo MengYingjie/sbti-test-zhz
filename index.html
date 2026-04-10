@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>《后宫甄嬛传》MBTI 人格测试</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <style>
     :root {
       --bg: #f8f1e9; /* 宣纸底色 */
@@ -655,11 +657,10 @@
 
     .result-actions {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 22px;
+      gap: 16px;
+      margin-top: 40px;
     }
     @media (max-width: 860px) {
       .result-top { grid-template-columns: 1fr; }
@@ -680,6 +681,46 @@
       .question-title { font-size: 15px; }
       .dim-grid,
       .score-grid { grid-template-columns: 1fr; }
+    }
+    /* 截图专属底部区域 (平时隐藏) */
+    .screenshot-footer {
+      display: none;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px dashed var(--line);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .screenshot-footer.active {
+      display: flex;
+    }
+    .qr-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .qr-info h4 {
+      margin: 0;
+      color: var(--accent-strong);
+      font-size: 18px;
+    }
+    .qr-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .qr-code-box {
+      width: 70px;
+      height: 70px;
+      background: #fff;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .qr-code-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
   </style>
 </head>
@@ -723,7 +764,7 @@
 
     
     <section id="result" class="screen">
-      <div class="result-wrap card">
+      <div class="result-wrap card" id="resultWrap">
         <div class="result-layout">
           <div class="result-top">
             <div class="poster-box" id="posterBox">
@@ -762,12 +803,24 @@
               <p>宫斗路漫漫，能活到最后一集才是真本事，各位小主，且行且珍惜！</p>
             </div>
           </details>
+
+          <!-- 截图专用的底部二维码信息 (默认隐藏) -->
+          <div class="screenshot-footer" id="screenshotFooter">
+            <div class="qr-info">
+              <h4>ZHBT 后宫人格测试</h4>
+              <p>扫码测测你能在甄嬛传活到第几集</p>
+            </div>
+            <div class="qr-code-box" id="qrcodeBox"></div>
+          </div>
         </div>
 
-        <div class="result-actions">
+        <div class="result-actions" id="resultActions">
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="shareBtn" class="btn-primary" style="background:#b63b36; border-color:#b63b36; color:#fff;">生成并下载分享图</button>
+          </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
             <button id="restartBtn" class="btn-secondary">重新投胎</button>
-            <button id="toTopBtn" class="btn-primary">返回养心殿</button>
+            <button id="toTopBtn" class="btn-secondary">返回养心殿</button>
           </div>
         </div>
       </div>
@@ -1714,8 +1767,71 @@
       }
 
       renderDimList(result);
+
+      // 生成二维码
+      const qrBox = document.getElementById('qrcodeBox');
+      qrBox.innerHTML = '';
+      new QRCode(qrBox, {
+        text: window.location.href.split('?')[0],
+        width: 62,
+        height: 62,
+        colorDark : "#8b2320",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.L
+      });
+
       showScreen('result');
     }
+
+    async function generateShareImage() {
+      const btn = document.getElementById('shareBtn');
+      const originalText = btn.textContent;
+      btn.textContent = "娘娘请稍候，画师正在作画...";
+      btn.disabled = true;
+
+      try {
+        const resultWrap = document.getElementById('resultWrap');
+        const actions = document.getElementById('resultActions');
+        const footer = document.getElementById('screenshotFooter');
+        
+        // 准备截图状态：隐藏操作按钮，显示底部二维码
+        actions.style.display = 'none';
+        footer.classList.add('active');
+
+        // 等待一小会儿确保DOM和图片加载完成
+        await new Promise(r => setTimeout(r, 500));
+
+        const canvas = await html2canvas(resultWrap, {
+          scale: 2, // 提高清晰度
+          useCORS: true, // 允许跨域图片
+          backgroundColor: '#f8f1e9',
+          logging: false
+        });
+
+        // 恢复原有状态
+        actions.style.display = 'flex';
+        footer.classList.remove('active');
+
+        // 触发下载
+        const imgData = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `ZHBT_后宫测试结果_${Date.now()}.png`;
+        link.href = imgData;
+        link.click();
+      } catch (err) {
+        console.error('截图失败:', err);
+        alert('抱歉小主，生成画像失败了，请稍后再试。');
+        
+        // 出错也记得恢复状态
+        document.getElementById('resultActions').style.display = 'flex';
+        document.getElementById('screenshotFooter').classList.remove('active');
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('shareBtn').addEventListener('click', generateShareImage);
 
     function startTest(preview = false) {
       app.previewMode = preview;
