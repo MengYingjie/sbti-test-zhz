@@ -1,0 +1,20 @@
+# Tasks
+- [x] Task 1: 整理并替换性格维度数据 (dimensionMeta & DIM_EXPLANATIONS)
+  - [x] SubTask 1.1: 将15个维度的名称映射为后宫主题（例如：自尊自信 -> 宠辱不惊）。
+  - [x] SubTask 1.2: 重写15个维度在 L/M/H 三个等级下的解析文案，符合后宫语境。
+- [x] Task 2: 整理并替换题目数据 (questions & specialQuestions)
+  - [x] SubTask 2.1: 将30道常规题目替换为甄嬛传剧情选择题，并确保对应选项的 value (1, 2, 3) 逻辑合理，不破坏原有维度的得分意义。
+  - [x] SubTask 2.2: 将2道特殊题替换为特定剧情（如与“纯元/菀类”相关的剧情），保留原有的 `drink_gate` 特殊触发逻辑。
+- [x] Task 3: 整理并替换人格数据库 (TYPE_LIBRARY & NORMAL_TYPES & TYPE_IMAGES)
+  - [x] SubTask 3.1: 选出27位甄嬛传人物，分别对应原有的27个人格代号。
+  - [x] SubTask 3.2: 撰写27位人物的结果页文案（intro 和 desc），描述其在后宫的生存特点。
+  - [x] SubTask 3.3: 在 `TYPE_LIBRARY` 中保留原 `code` 作为键值，仅修改 `cn`, `intro`, `desc`，以最小化改动风险。
+  - [x] SubTask 3.4: 更新 `TYPE_IMAGES` 中的图片路径或暂时移除强依赖，防止加载失败。
+- [x] Task 4: 更新 HTML 页面文案与样式
+  - [x] SubTask 4.1: 修改页面标题、欢迎语、按钮文案等。
+  - [x] SubTask 4.2: 微调 CSS 颜色变量（如改为朱红、明黄或清雅的宫廷色系）。
+
+# Task Dependencies
+- [Task 2] depends on [Task 1]
+- [Task 3] depends on [Task 1]
+- [Task 4] depends on [Task 3]
