@@ -1,6 +1,4 @@
-# SBTI 测试（镜像）
+# SBTI 测试（甄嬛传）
 
-图片和html已拆分
-
-地址：https://sbti.unun.dev  
-原作者：[B站@蛆肉儿串儿](https://www.bilibili.com/video/BV1LpDHByET6/)
+地址：[https://sbti.unun.dev  ](https://zhz.myj.qzz.io/)
+作者：B站孟应杰
